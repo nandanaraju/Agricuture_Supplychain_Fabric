@@ -29,6 +29,7 @@ export manufacturer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/manu
 export wholesaler_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
 export distributer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/distributer.agri.com/peers/peer0.distributer.agri.com/tls/ca.crt
 export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+
 Distributer Organization
 
 export CHANNEL_NAME=agrichannel
