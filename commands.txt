@@ -1,0 +1,161 @@
+Manufacturer Organization
+
+export CHANNEL_NAME=agrichannel
+export FABRIC_CFG_PATH=./peercfg
+export CORE_PEER_LOCALMSPID=manufacturerMSP
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/peers/peer0.manufacturer.agri.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/users/Admin@manufacturer.agri.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/agri.com/orderers/orderer.agri.com/msp/tlscacerts/tlsca.agri.com-cert.pem
+export manufacturer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/peers/peer0.manufacturer.agri.com/tls/ca.crt
+export wholesaler_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
+export distributer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/distributer.agri.com/peers/peer0.distributer.agri.com/tls/ca.crt
+export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+
+
+Wholesaler Oraganization
+
+
+export CHANNEL_NAME=agrichannel
+export FABRIC_CFG_PATH=./peercfg
+export CORE_PEER_LOCALMSPID=wholesalerMSP
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/users/Admin@wholesaler.agri.com/msp
+export CORE_PEER_ADDRESS=localhost:9051
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/agri.com/orderers/orderer.agri.com/msp/tlscacerts/tlsca.agri.com-cert.pem
+export manufacturer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/peers/peer0.manufacturer.agri.com/tls/ca.crt
+export wholesaler_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
+export distributer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/distributer.agri.com/peers/peer0.distributer.agri.com/tls/ca.crt
+export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+Distributer Organization
+
+export CHANNEL_NAME=agrichannel
+export FABRIC_CFG_PATH=./peercfg
+export CORE_PEER_LOCALMSPID=distributerMSP
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/distributer.agri.com/peers/peer0.distributer.agri.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/distributer.agri.com/users/Admin@distributer.agri.com/msp
+export CORE_PEER_ADDRESS=localhost:8051
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/agri.com/orderers/orderer.agri.com/msp/tlscacerts/tlsca.agri.com-cert.pem
+export manufacturer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/peers/peer0.manufacturer.agri.com/tls/ca.crt
+export wholesaler_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
+export distributer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/distributer.agri.com/peers/peer0.distributer.agri.com/tls/ca.crt
+export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+
+
+
+Market Organization
+
+export CHANNEL_NAME=agrichannel
+export FABRIC_CFG_PATH=./peercfg
+export CORE_PEER_LOCALMSPID=marketMSP
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/market.agri.com/users/Admin@market.agri.com/msp
+export CORE_PEER_ADDRESS=localhost:11051
+export ORDERER_CA=${PWD}/organizations/ordererOrganizations/agri.com/orderers/orderer.agri.com/msp/tlscacerts/tlsca.agri.com-cert.pem
+export manufacturer_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/manufacturer.agri.com/peers/peer0.manufacturer.agri.com/tls/ca.crt
+export wholesaler_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/wholesaler.agri.com/peers/peer0.wholesaler.agri.com/tls/ca.crt
+export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+export market_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/market.agri.com/peers/peer0.market.agri.com/tls/ca.crt
+
+
+createProduct
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"createProduct","Args":["Product-01", "Paddy", "10","12/10/2024","Kerala", "Manufacturer1"]}'
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"createProduct","Args":["Product-02", "Wheat", "20","11/12/2024","Kerala", "Manufacturer2"]}'
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"createProduct","Args":["Product-03", "Maize", "30","22/6/2024","Kerala", "Manufacturer3"]}'
+
+readProduct
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"function":"readProduct","Args":["Product-01"]}'
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"function":"readProduct","Args":["Product-02"]}'
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"function":"readProduct","Args":["Product-03"]}'
+
+
+transferToWholesaler
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"transferToWholesaler","Args":["Product-01", "Wholesaler1"]}'
+createOrder(PDC)
+
+export TYPE=$(echo -n "Paddy" | base64 | tr -d \\n)
+
+export QUANTITY=$(echo -n "10" | base64 | tr -d \\n)
+
+export PRICE=$(echo -n "400" | base64 | tr -d \\n)
+
+export DISTRIBUTER_NAME=$(echo -n "Distributer1" | base64 | tr -d \\n)
+
+
+export TYPE=$(echo -n "Wheat" | base64 | tr -d \\n)
+
+export QUANTITY=$(echo -n "20" | base64 | tr -d \\n)
+
+export PRICE=$(echo -n "300" | base64 | tr -d \\n)
+
+export DISTRIBUTER_NAME=$(echo -n "Distributer2" | base64 | tr -d \\n)
+
+
+Invoke 
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT  --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"Args":["OrderContract:createOrder","Order-01"]}' --transient "{\"type\":\"$TYPE\",\"quantity\":\"$QUANTITY\",\"price\":\"$PRICE\",\"distributerName\":\"$DISTRIBUTER_NAME\"}"
+
+Query
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["OrderContract:readOrder","Order-01"]}'
+
+
+
+
+
+
+
+
+
+matchOrder
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT -c '{"function":"matchOrder","Args":["Product-01", "Order-01"]}'
+
+
+
+assignProductToMarket
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:7051 --tlsRootCertFiles $manufacturer_PEER_TLSROOTCERT --peerAddresses localhost:9051 --tlsRootCertFiles $wholesaler_PEER_TLSROOTCERT --peerAddresses localhost:8051 --tlsRootCertFiles $distributer_PEER_TLSROOTCERT --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"assignProductToMarket","Args":["Product-01", "Alice","Market1"]}'
+
+completeProductSaleAtMarket
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.agri.com --tls --cafile $ORDERER_CA -C $CHANNEL_NAME -n Supply-chain --peerAddresses localhost:11051 --tlsRootCertFiles $market_PEER_TLSROOTCERT -c '{"function":"completeProductSaleAtMarket","Args":["Product-01","500"]}'
+
+
+
+
+Richquery
+
+products
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["ProductContract:queryAllProducts"]}'
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["ProductContract:getProductsByRange","Product-01",""]}'
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["ProductContract:getProductHistory","Product-1”]}'
+
+Orders
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["OrderContract:queryAllOrders"]}'
+
+peer chaincode query -C $CHANNEL_NAME -n Supply-chain -c '{"Args":["OrderContract:getOrdersByRange","Order-01",""]}'
+
+
+
+
+
+
+
+
+
