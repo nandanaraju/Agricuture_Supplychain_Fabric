@@ -10,7 +10,7 @@ const transientData = {
 }
 
 userClient.submitTxn(
-    "distributer",
+    "wholesaler",
     "agrichannel",
     "Supply-chain",
     "OrderContract",

@@ -2,14 +2,14 @@ const { clientApplication } = require('./client')
 
 let userClient = new clientApplication()
 userClient.submitTxn(
-    "distributer",
+    "wholesaler",
     "agrichannel",
     "Supply-chain",
     "OrderContract",
     "queryTxn",
     "",
     "readOrder",
-    "Order-01",
+    "Order-02",
 ).then(result => {
         // Decode the Uint8Array to a string
         const decodedString = new TextDecoder().decode(result);

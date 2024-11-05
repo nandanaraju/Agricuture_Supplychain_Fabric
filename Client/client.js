@@ -46,7 +46,10 @@ class clientApplication {
 
             if (txnType == "invokeTxn") {
                 resultBytes = await contract.submitTransaction(txnName, ...args);
-            } else if (txnType == "queryTxn") {
+            }else if (txnType == "transTxn"){
+                resultBytes = await contract.submitTransaction(txnName, ...args);
+            }
+             else if (txnType == "queryTxn") {
                 resultBytes = await contract.evaluateTransaction(txnName, ...args);
             } else if (txnType == "privateTxn") {
                 await contract.submit(txnName, {
