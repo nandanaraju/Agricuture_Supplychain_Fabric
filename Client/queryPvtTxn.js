@@ -9,7 +9,7 @@ userClient.submitTxn(
     "queryTxn",
     "",
     "readOrder",
-    "Order-02",
+    "Order-01",
 ).then(result => {
         // Decode the Uint8Array to a string
         const decodedString = new TextDecoder().decode(result);

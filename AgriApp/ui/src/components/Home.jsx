@@ -1,39 +1,119 @@
-import React from 'react';
-import logo from '../assets/images/images.png'; // Replace with the actual path of your logo image
+import React, { useState } from 'react';
+import logo from '../assets/images/images.png';
+import img1 from '../assets/images/image.png';
+import manufacturerImg from '../assets/images/Manufacturer.png';
+import distributorImg from '../assets/images/Distributer.png';
+import wholesalerImg from '../assets/images/Wholesaler.png';
+import marketImg from '../assets/images/Market.png';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const openLoginModal = () => setIsLoginOpen(true);
+  const closeLoginModal = () => setIsLoginOpen(false);
+
+  const handleRoleClick = (role) => {
+    navigate('/login', { state: { userType: role } });
+  };
+
   return (
-    <div className="font-sans bg-gray-100 min-h-screen">
+    <div className="font-sans bg-white min-h-screen">
       {/* Navbar */}
-      <header className="flex items-center justify-between p-6 bg-blue-900 text-white">
-        <img src={logo} alt="Agrichain Logo" className="h-10" />
-        <nav className="space-x-6">
-          <a href="#home" className="hover:text-green-400">Home</a>
-          <a href="#about" className="hover:text-green-400">About the platform</a>
-          <a href="#users" className="hover:text-green-400">Our users</a>
-          <a href="#features" className="hover:text-green-400">Features</a>
-          <a href="#contact" className="hover:text-green-400">Contact us</a>
+      <header className="flex items-center justify-between p-4 bg-white border-b border-gray-200 shadow-md">
+        <div className="flex items-center space-x-3">
+          <img src={logo} alt="Agrichain Logo" className="h-10" />
+          <h1 className="text-2xl font-extrabold text-green-700 tracking-wide">
+            AGRICHAIN
+          </h1>
+        </div>
+        <nav className="space-x-8">
+          <a href="#home" className="text-gray-700 font-medium hover:text-green-700 transition duration-300">
+            Home
+          </a>
+          <a href="#about" className="text-gray-700 font-medium hover:text-green-700 transition duration-300">
+            About
+          </a>
+          <a href="#contact" className="text-gray-700 font-medium hover:text-green-700 transition duration-300">
+            Contact
+          </a>
         </nav>
         <div className="space-x-4">
-          <button className="px-4 py-2 border border-white rounded text-white hover:bg-green-500">Login</button>
-          <button className="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600">Sign Up</button>
+          <button
+            onClick={openLoginModal}
+            className="px-4 py-2 border border-green-700 text-green-700 rounded hover:bg-green-700 hover:text-white transition duration-300"
+          >
+            Login
+          </button>
+          <button className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition duration-300">
+            Sign Up
+          </button>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="relative text-center text-white h-[500px] flex items-center justify-center">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('farmers-field.jpg')" }}></div>
-        <div className="absolute inset-0 bg-black opacity-30"></div>
-        
-        <div className="relative z-10">
-          <h1 className="text-5xl font-bold mb-4 text-green-400">
-            Connecting the <span className="text-blue-900">Best</span>
-          </h1>
-          <button className="mt-4 px-8 py-3 bg-green-500 text-white font-semibold rounded hover:bg-green-600">
-            Explore Now
-          </button>
+      <main className="relative py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="md:w-1/2 text-left">
+            <h2 className="text-5xl font-bold text-gray-800 leading-tight mb-4">
+              Blockchain <span className="text-green-700">Agriculture Supply Chain</span>
+            </h2>
+            <p className="text-lg text-gray-600 mb-8">
+              A powerful agriculture supply chain management software tailor-made to support food companies
+              in creating a sustainable and efficient supply chain using crop sourcing management, contract
+              farming, and outgrower management features.
+            </p>
+          </div>
+          <div className="mt-8 md:mt-0 md:w-1/2">
+            <img src={img1} alt="Dashboard Mockup" className="w-full rounded" />
+          </div>
         </div>
       </main>
+
+      {/* Login Modal */}
+      {isLoginOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">Choose Your Role</h2>
+              <button onClick={closeLoginModal} className="text-gray-600 hover:text-gray-800">
+                &times;
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div
+                className="text-center cursor-pointer"
+                onClick={() => handleRoleClick('manufacturer')}
+              >
+                <img src={manufacturerImg} alt="Manufacturer" className="h-24 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Manufacturer</p>
+              </div>
+              <div
+                className="text-center cursor-pointer"
+                onClick={() => handleRoleClick('distributor')}
+              >
+                <img src={distributorImg} alt="Distributor" className="h-24 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Distributor</p>
+              </div>
+              <div
+                className="text-center cursor-pointer"
+                onClick={() => handleRoleClick('wholesaler')}
+              >
+                <img src={wholesalerImg} alt="Wholesaler" className="h-24 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Wholesaler</p>
+              </div>
+              <div
+                className="text-center cursor-pointer"
+                onClick={() => handleRoleClick('market')}
+              >
+                <img src={marketImg} alt="Market" className="h-24 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Market</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

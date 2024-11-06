@@ -3,8 +3,8 @@ const { clientApplication } = require('./client')
 let userClient = new clientApplication();
 
 const transientData = {
-    type: Buffer.from("Wheat"),
-    quantity: Buffer.from("20"),
+    type: Buffer.from("Paddy"),
+    quantity: Buffer.from("10"),
     price: Buffer.from("1000"),
     distributerName: Buffer.from("Distributer1")
 }
@@ -17,7 +17,7 @@ userClient.submitTxn(
     "privateTxn",
     transientData,
     "createOrder",
-    "Order-02",
+    "Order-01",
 ).then(result => {
     console.log(new TextDecoder().decode(result))
     console.log("Order successfully created")

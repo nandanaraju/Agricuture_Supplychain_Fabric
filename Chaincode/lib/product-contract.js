@@ -122,6 +122,7 @@ class ProductContract extends Contract {
             return 'Order does not match the product specifications';
         }
     }
+    
 
     async assignProductToMarket(ctx, productId, ownerName, marketName) {
         const mspID = ctx.clientIdentity.getMSPID();
