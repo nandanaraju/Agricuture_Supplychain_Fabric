@@ -1,39 +1,47 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import img from "../assets/images/images.png";
 
 const LoginPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const userType = location.state?.userType || "manufacturer";
 
   const [username, setUsername] = useState("");
   const [passphrase, setPassphrase] = useState("");
 
-  const loginSubmit = async (e) => {
+  // Predefined user data
+  const predefinedUsers = {
+    manufacturer: { username: "manufacturerUser", passphrase: "manufacturerPass" },
+    distributor: { username: "distributorUser", passphrase: "distributorPass" },
+    market: { username: "marketUser", passphrase: "marketPass" },
+    wholesaler: { username: "wholesalerUser", passphrase: "wholesalerPass" },
+  };
+
+  const loginSubmit = (e) => {
     e.preventDefault();
-
-    const loginDetails = { username, password, passphrase, userType };
-
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginDetails),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        toast.success(`Logged in as: ${data.userType}`);
-      } else {
-        toast.error("Please check your credentials");
+  
+    // Validate the user credentials
+    const user = predefinedUsers[userType];
+    if (user && user.username === username && user.passphrase === passphrase) {
+      toast.success(`Logged in as: ${userType}`);
+      
+      // Redirect based on userType
+      if (userType === "manufacturer") {
+        navigate("/manufacturer");
+      } else if (userType === "distributor") {
+        navigate("/distributor");
+      } else if (userType === "market") {
+        navigate("/market");
+      } else if (userType === "wholesaler") {
+        navigate("/wholesaler");
       }
-    } catch (error) {
-      toast.error("Login failed. Please try again.");
+    } else {
+      toast.error("Invalid credentials. Please try again.");
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -59,14 +67,12 @@ const LoginPage = () => {
               type="text"
               id="username"
               name="username"
-              placeholder="Username or Email"
+              placeholder="Username"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-
-          
 
           <div>
             <input
@@ -87,9 +93,9 @@ const LoginPage = () => {
             Sign In
           </button>
 
-          <p className="text-center text-gray-500 text-sm mt-4">
-            Or sign in with Google
-          </p>
+          <a href="/signup" className="text-center text-gray-500 text-md mt-4">
+            Are you New here? Sign Up
+          </a>
         </form>
       </div>
     </div>

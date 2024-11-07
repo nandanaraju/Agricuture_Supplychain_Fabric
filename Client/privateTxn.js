@@ -10,15 +10,15 @@ const transientData = {
 }
 
 userClient.submitTxn(
-    "wholesaler",
+    "distributer",
     "agrichannel",
     "Supply-chain",
     "OrderContract",
     "privateTxn",
     transientData,
     "createOrder",
-    "Order-01",
+    "Order-04",
 ).then(result => {
     console.log(new TextDecoder().decode(result))
-    console.log("Order successfully created")
+    // console.log("Order successfully created")
 })

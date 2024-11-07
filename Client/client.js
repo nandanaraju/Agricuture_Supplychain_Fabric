@@ -51,15 +51,19 @@
         } else if (txnType == "transTxn") {
             resultBytes = await contract.submitTransaction(txnName, ...args);
         }else if (txnType == "matchTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        }else if (txnType == "assignTxn") {
+            resultBytes = await contract.submit(txnName, {
+                arguments: [...args],
+                transientData: transientData,
+                endorsingOrganizations:['wholesalerMSP', 'distributerMSP']
+                })        }else if (txnType == "assignTxn") {
             resultBytes = await contract.submitTransaction(txnName, ...args);
         }else if (txnType == "completeTxn") {
             resultBytes = await contract.submitTransaction(txnName, ...args);
         }else if (txnType == "privateTxn") {
-            await contract.submit(txnName, {
+            resultBytes = await contract.submit(txnName, {
             arguments: [...args],
             transientData: transientData,
+            endorsingOrganizations:['manufacturerMSP','distributerMSP', 'wholesalerMSP']
             });
         }
             else {

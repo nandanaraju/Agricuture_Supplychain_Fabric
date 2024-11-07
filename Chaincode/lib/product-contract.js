@@ -85,9 +85,9 @@ class ProductContract extends Contract {
     // Distributor creates an order, then matches it with available products
     async matchOrder(ctx, productId, orderId) {
         const mspID = ctx.clientIdentity.getMSPID();
-        if (mspID !== 'wholesalerMSP') {
-            return `Organization with MSP ID ${mspID} cannot perform this action.`;
-        }
+        // if (mspID !== 'wholesalerMSP',) {
+        //     return `Organization with MSP ID ${mspID} cannot perform this action.`;
+        // }
 
         const productExists = await this.productExists(ctx, productId);
         if (!productExists) {
@@ -113,8 +113,11 @@ class ProductContract extends Contract {
             productDetails.ownedBy = orderDetails.distributerName;
             productDetails.status = 'Assigned to Order';
 
-            const updatedProductBuffer = Buffer.from(JSON.stringify(productDetails));
-            await ctx.stub.putState(productId, updatedProductBuffer);
+           
+
+            console.log("product details ===",productDetails)
+            const updatedProductBufferNew = Buffer.from(JSON.stringify(productDetails));
+            await ctx.stub.putState(productId, updatedProductBufferNew);
 
             await orderContract.deleteOrder(ctx, orderId); // Delete the matched order from OrderContract
             return `Product ${productId} is assigned to ${orderDetails.distributerName}`;

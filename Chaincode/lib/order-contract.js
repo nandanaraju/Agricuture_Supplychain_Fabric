@@ -57,16 +57,16 @@ class OrderContract extends Contract {
 
     async deleteOrder(ctx, orderId) {
         const mspid = ctx.clientIdentity.getMSPID();
-        if (mspid === 'distributerMSP') {
+        // if (mspid === 'distributerMSP') {
             const exists = await this.orderExists(ctx, orderId);
             if (!exists) {
                 throw new Error(`The order ${orderId} does not exist`);
             }
             const collectionName = await getCollectionName(ctx);
             await ctx.stub.deletePrivateData(collectionName, orderId);
-        } else {
-            return `Organization with MSP ID ${mspid} cannot perform this action`;
-        }
+        // } else {
+        //     return `Organization with MSP ID ${mspid} cannot perform this action`;
+        // }
     }
 
     async queryAllOrders(ctx) {
