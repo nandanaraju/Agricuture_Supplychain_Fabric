@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import logo from '../assets/images/images.png';
 import img1 from '../assets/images/image.png';
-import manufacturerImg from '../assets/images/Manufacturer.png';
-import distributerImg from '../assets/images/Distributer.png';
-import wholesalerImg from '../assets/images/Wholesaler.png';
-import marketImg from '../assets/images/Market.png';
+import manufacturerImg from '../assets/images/images.jpeg';
+import distributerImg from '../assets/images/images.jpeg';
+import wholesalerImg from '../assets/images/images.jpeg';
+import marketImg from '../assets/images/images.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 function HomePage() {

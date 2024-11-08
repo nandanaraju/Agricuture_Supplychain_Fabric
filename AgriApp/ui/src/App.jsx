@@ -8,6 +8,7 @@ import ReadProductPage from "./components/ReadProduct"
 import DistributerDashboard from "./components/DistributerDashboard"
 import CreateOrder from "./components/CreateOrder"
 import ReadOrder from "./components/ReadOrder"
+import QueryAllProducts from "./components/QueryAllproducts"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -21,6 +22,7 @@ function App() {
     <Route path="/distributer"element={<DistributerDashboard/>}/>
     <Route path="/create-order"element={<CreateOrder/>}/>
     <Route path="/read-order"element={<ReadOrder/>}/>
+    <Route path="/view-product"element={<QueryAllProducts/>}/>
 
 
 

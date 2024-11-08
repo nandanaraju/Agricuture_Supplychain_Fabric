@@ -179,4 +179,73 @@ router.delete("/deleteproduct", async (req, res) => {
     }
 });
 
+router.post("/queryAllProducts", async (req, res) => {
+    try {
+      
+      let product = await userClient.submitTxn(
+        "manufacturer",
+        "agrichannel",
+        "Supply-chain",
+        "ProductContract",
+        "queryTxn",
+        "",
+        "queryAllProducts"
+      );
+      const data = new TextDecoder().decode(product);
+      const value = JSON.parse(data);
+  
+      res.status(200).json({
+        success: true,
+        message: "data query successfully!",
+        data: { value },
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Please check the ID!",
+        data: { error },
+      });
+    }
+  });
+
+
+  // Transfer Product to Wholesaler
+router.post("/transferToWholesaler", async (req, res) => {
+    const { productId, wholesalerName } = req.body;
+
+    if (!productId || !wholesalerName) {
+        return res.status(400).json({ message: "Product ID and Wholesaler Name are required." });
+    }
+
+    try {
+        const result = await userClient.submitTxn(
+            "manufacturer", // Manufacturer organization
+            "agrichannel",  // Channel name
+            "Supply-chain", // Chaincode name
+            "ProductContract", // Smart contract name
+            "transTxn",     // Transaction type
+            "",             // No transient data
+            "transferToWholesaler", // Function name in chaincode
+            productId,      // Product ID to transfer
+            wholesalerName  // Wholesaler receiving the product
+        );
+
+        const decodedResult = new TextDecoder().decode(result);
+
+        res.status(200).json({
+            success: true,
+            message: "Product transferred to wholesaler successfully.",
+            data: { result: decodedResult }
+        });
+    } catch (error) {
+        console.error("Error transferring product:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error transferring product.",
+            data: { error: error.message }
+        });
+    }
+});
+
+
 module.exports = router;

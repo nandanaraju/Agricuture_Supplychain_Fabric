@@ -4,12 +4,11 @@ import { toast } from "react-toastify";
 const ReadProductPage = () => {
   const [productId, setProductId] = useState("");
   const [productData, setProductData] = useState(null);
+  const [wholesalerName, setWholesalerName] = useState(""); // Added state for wholesaler name
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const readDetails = {
-      productId,
-    };
+    const readDetails = { productId };
 
     const res = await fetch("/api/readproduct", {
       method: "POST",
@@ -30,6 +29,7 @@ const ReadProductPage = () => {
   const resetForm = () => {
     setProductId(""); // Clear the input field
     setProductData(null); // Clear the fetched data
+    setWholesalerName(""); // Clear the wholesaler name
   };
 
   const deleteProduct = async () => {
@@ -55,6 +55,34 @@ const ReadProductPage = () => {
       setProductId(""); // Clear the input field
     } else {
       toast.error(result.message || "Error deleting product");
+    }
+  };
+
+  // Function to handle product transfer
+  const transferProduct = async () => {
+    if (!wholesalerName || !productId) {
+      toast.error("Both product ID and wholesaler name are required for transfer");
+      return;
+    }
+
+    const transferDetails = { productId, wholesalerName };
+
+    const res = await fetch("/api/transferToWholesaler", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(transferDetails),
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      toast.success("Product transferred successfully!");
+      setProductData(null); // Clear the product data after transfer
+      setProductId(""); // Clear the product ID field
+      setWholesalerName(""); // Clear the wholesaler name field
+    } else {
+      toast.error(result.message || "Error transferring product");
     }
   };
 
@@ -112,12 +140,40 @@ const ReadProductPage = () => {
                 </li>
               ))}
             </ul>
-            <button
-              onClick={deleteProduct}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            >
-              Delete Product
-            </button>
+
+            <div className="mt-4 mb-4">
+              <label
+                htmlFor="wholesalerName"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Wholesaler Name
+              </label>
+              <input
+                type="text"
+                id="wholesalerName"
+                name="wholesalerName"
+                className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={wholesalerName}
+                onChange={(e) => setWholesalerName(e.target.value)}
+              />
+            </div>
+
+            <div className="flex items-center justify-between mb-6">
+              <button
+                type="button"
+                onClick={transferProduct}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Transfer to Wholesaler
+              </button>
+              <button
+                type="button"
+                onClick={deleteProduct}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Delete Product
+              </button>
+            </div>
           </div>
         )}
       </div>
