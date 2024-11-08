@@ -14,7 +14,7 @@ const LoginPage = () => {
   // Predefined user data
   const predefinedUsers = {
     manufacturer: { username: "manufacturerUser", passphrase: "manufacturerPass" },
-    distributor: { username: "distributorUser", passphrase: "distributorPass" },
+    distributer: { username: "distributerUser", passphrase: "distributerPass" },
     market: { username: "marketUser", passphrase: "marketPass" },
     wholesaler: { username: "wholesalerUser", passphrase: "wholesalerPass" },
   };
@@ -30,8 +30,8 @@ const LoginPage = () => {
       // Redirect based on userType
       if (userType === "manufacturer") {
         navigate("/manufacturer");
-      } else if (userType === "distributor") {
-        navigate("/distributor");
+      } else if (userType === "distributer") {
+        navigate("/distributer");
       } else if (userType === "market") {
         navigate("/market");
       } else if (userType === "wholesaler") {

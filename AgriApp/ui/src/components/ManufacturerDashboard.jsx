@@ -12,7 +12,7 @@ const ManufacturerDashboard = () => {
       <img
         src={img} // Replace with your image URL
         alt="product Image"
-        className="mx-auto mb-6 rounded-lg shadow-md max-h-48 w-auto" // Limit image height
+        className="mx-auto mb-6 rounded-lg shadow-md max-h-48 w-auto" 
       />
 
       {/* Button Container with Flexbox */}
@@ -22,7 +22,11 @@ const ManufacturerDashboard = () => {
             Create Product
           </button>
         </Link>
-
+        <Link to="/view-product">
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-full w-full hover:bg-blue-600">
+          View Products
+          </button>
+        </Link>
         <Link to="/read-product">
           <button className="bg-green-500 text-white py-2 px-4 rounded-full w-full hover:bg-green-600">
             Read Product

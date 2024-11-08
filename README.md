@@ -22,7 +22,7 @@ Blockchain technology offers a transparent, immutable, and secure decentralized 
 ## 👥 Users in this Application
 - **Manufacturer**: Responsible for producing goods.
 - **Wholesaler**: Handles bulk purchasing and distribution.
-- **Distributor**: Distributes products to markets.
+- **Distributer**: Distributes products to markets.
 - **Market**: The end-user of the product.
 
 ## 🚀 Getting Started

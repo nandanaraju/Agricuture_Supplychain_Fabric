@@ -82,7 +82,7 @@ class ProductContract extends Contract {
         }
     }
 
-    // Distributor creates an order, then matches it with available products
+    // Distributer creates an order, then matches it with available products
     async matchOrder(ctx, productId, orderId) {
         const mspID = ctx.clientIdentity.getMSPID();
         // if (mspID !== 'wholesalerMSP',) {

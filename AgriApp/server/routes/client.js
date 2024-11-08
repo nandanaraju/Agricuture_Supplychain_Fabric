@@ -1,114 +1,120 @@
-    const { profile } = require("./profile");
+const { profile } = require("./profile");
 
-    const { promises: fs } = require("fs");
+const { promises: fs } = require("fs");
 
-    const path = require("path");
+const path = require("path");
 
-    const crypto = require("crypto");
+const crypto = require("crypto");
 
-    const grpc = require("@grpc/grpc-js");
+const grpc = require("@grpc/grpc-js");
 
-    const { connect, signers } = require("@hyperledger/fabric-gateway");
+const { connect, signers } = require("@hyperledger/fabric-gateway");
 
-    class clientApplication {
-    async submitTxn(
-        organization,
-        channelName,
-        chaincodeName,
-        contractName,
-        txnType,
-        transientData,
-        txnName,
-        ...args
-    ) {
-        let orgProfile = profile[organization];
+class clientApplication {
+async submitTxn(
+    organization,
+    channelName,
+    chaincodeName,
+    contractName,
+    txnType,
+    transientData,
+    txnName,
+    ...args
+) {
+    let orgProfile = profile[organization];
 
-        const client = await newGrpcConnection(
-        orgProfile["tlsCertPath"],
-        orgProfile["peerEndpoint"],
-        orgProfile["peerHostAlias"]
-        );
+    const client = await newGrpcConnection(
+    orgProfile["tlsCertPath"],
+    orgProfile["peerEndpoint"],
+    orgProfile["peerHostAlias"]
+    );
 
-        const gateway = connect({
-        client,
+    const gateway = connect({
+    client,
 
-        identity: await newIdentity(orgProfile["certPath"], orgProfile["mspId"]),
+    identity: await newIdentity(orgProfile["certPath"], orgProfile["mspId"]),
 
-        signer: await newSigner(orgProfile["keyDirectoryPath"]),
-        });
+    signer: await newSigner(orgProfile["keyDirectoryPath"]),
+    });
 
-        try {
-        let network = await gateway.getNetwork(channelName);
+    try {
+    let network = await gateway.getNetwork(channelName);
 
-        let contract = await network.getContract(chaincodeName, contractName);
+    let contract = await network.getContract(chaincodeName, contractName);
 
-        let resultBytes;
+    let resultBytes;
 
-        if (txnType == "invokeTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        } else if (txnType == "queryTxn") {
-            resultBytes = await contract.evaluateTransaction(txnName, ...args);
-        } else if (txnType == "transTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        }else if (txnType == "matchTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        }else if (txnType == "assignTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        }else if (txnType == "completeTxn") {
-            resultBytes = await contract.submitTransaction(txnName, ...args);
-        }else if (txnType == "privateTxn") {
-            await contract.submit(txnName, {
+    if (txnType == "invokeTxn") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
+    } else if (txnType == "queryTxn") {
+        resultBytes = await contract.evaluateTransaction(txnName, ...args);
+    }else if (txnType == "dltTxn") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
+    } else if (txnType == "transTxn") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
+    }else if (txnType == "matchTxn") {
+        resultBytes = await contract.submit(txnName, {
             arguments: [...args],
             transientData: transientData,
-            });
-        }
-            else {
-            console.log("Invalid txnType", txnType);
-        }
-
-        console.log("*** Result:", resultBytes);
-
-        return Promise.resolve(resultBytes);
-        } catch (error) {
-        console.log("Error occured", error);
-
-        return Promise.reject(error);
-        } finally {
-        gateway.close();
-
-        client.close();
-        }
+            endorsingOrganizations:['wholesalerMSP', 'distributerMSP']
+            })        }else if (txnType == "assignTxn") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
+    }else if (txnType == "completeTxn") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
+    }else if (txnType == "privateTxn") {
+        resultBytes = await contract.submit(txnName, {
+        arguments: [...args],
+        transientData: transientData,
+        endorsingOrganizations:['manufacturerMSP','distributerMSP', 'wholesalerMSP']
+        });
     }
+        else {
+        console.log("Invalid txnType", txnType);
     }
 
-    async function newGrpcConnection(tlsCertPath, peerEndpoint, peerHostAlias) {
-    const tlsRootCert = await fs.readFile(tlsCertPath);
+    console.log("*** Result:", resultBytes);
 
-    const tlsCredentials = grpc.credentials.createSsl(tlsRootCert);
+    return Promise.resolve(resultBytes);
+    } catch (error) {
+    console.log("Error occured", error);
 
-    return new grpc.Client(peerEndpoint, tlsCredentials, {
-        "grpc.ssl_target_name_override": peerHostAlias,
-    });
+    return Promise.reject(error);
+    } finally {
+    gateway.close();
+
+    client.close();
     }
+}
+}
 
-    async function newIdentity(certPath, mspId) {
-    const credentials = await fs.readFile(certPath);
+async function newGrpcConnection(tlsCertPath, peerEndpoint, peerHostAlias) {
+const tlsRootCert = await fs.readFile(tlsCertPath);
 
-    return { mspId, credentials };
-    }
+const tlsCredentials = grpc.credentials.createSsl(tlsRootCert);
 
-    async function newSigner(keyDirectoryPath) {
-    const files = await fs.readdir(keyDirectoryPath);
+return new grpc.Client(peerEndpoint, tlsCredentials, {
+    "grpc.ssl_target_name_override": peerHostAlias,
+});
+}
 
-    const keyPath = path.resolve(keyDirectoryPath, files[0]);
+async function newIdentity(certPath, mspId) {
+const credentials = await fs.readFile(certPath);
 
-    const privateKeyPem = await fs.readFile(keyPath);
+return { mspId, credentials };
+}
 
-    const privateKey = crypto.createPrivateKey(privateKeyPem);
+async function newSigner(keyDirectoryPath) {
+const files = await fs.readdir(keyDirectoryPath);
 
-    return signers.newPrivateKeySigner(privateKey);
-    }
+const keyPath = path.resolve(keyDirectoryPath, files[0]);
 
-    module.exports = {
-    clientApplication,
-    };
+const privateKeyPem = await fs.readFile(keyPath);
+
+const privateKey = crypto.createPrivateKey(privateKeyPem);
+
+return signers.newPrivateKeySigner(privateKey);
+}
+
+module.exports = {
+clientApplication,
+};

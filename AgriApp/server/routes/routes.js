@@ -1,90 +1,182 @@
-    const express = require("express");
-    const router = express.Router();
-    const { clientApplication } = require("./client");
+const express = require("express");
+const { clientApplication } = require("./client");
 
-    router.post("/readproduct", async (req, res) => {
-        try {
-            const { productId } = req.body;
-            if (!productId) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Product ID is required",
-                });
-            }
-    
-            let manufacturerClient = new clientApplication();
-            let products = await manufacturerClient.submitTxn(
-                "manufacturer",
-                "agrichannel",
-                "Supply-chain",
-                "ProductContract",
-                "queryTxn",
-                "",
-                "readProduct",
-                productId
-            );
-    
-            const data = new TextDecoder().decode(products);
-            const value = JSON.parse(data);
-    
-            res.status(200).json({
-                success: true,
-                message: "Product data read successfully!",
-                data: { value },
-            });
-        } catch (error) {
-            console.error("Error reading product:", error);
-            res.status(500).json({
-                success: false,
-                message: "Please check the Product ID!",
-                data: { error: error.message },
-            });
-        }
-    });
-    
-    router.post("/createproduct", async (req, res) => {
-        try {
-            const { productId, type, quantity, harvestDate, origin, producerName } = req.body;
-    
-            if (!productId || !type || !quantity || !harvestDate || !origin || !producerName) {
-                return res.status(400).json({
-                    success: false,
-                    message: "All fields are required",
-                });
-            }
-    
-            let manufacturerClient = new clientApplication();
-    
-            const result = await manufacturerClient.submitTxn(
-                "manufacturer",
-                "agrichannel",
-                "Supply-chain",
-                "ProductContract",
-                "invokeTxn",
-                "",
-                "createProduct",
-                productId,
-                type,
-                quantity.toString(), // Ensure correct type
-                harvestDate.toString(), // Ensure correct type
-                origin,
-                producerName
-            );
-    
-            res.status(201).json({
-                success: true,
-                message: "Product created successfully!",
-                data: { result },
-            });
-        } catch (error) {
-            console.error("Error creating product:", error);
-            res.status(500).json({
-                success: false,
-                message: "Please check the Product ID!",
-                data: { error: error.message },
-            });
-        }
-    });
-    
+const router = express.Router();
+const userClient = new clientApplication();
 
-    module.exports = router;
+// Create Order
+router.post("/createorder", async (req, res) => {
+    const { orderId, type, quantity, price, distributerName } = req.body;
+
+    if (!orderId || !type || !quantity || !price || !distributerName) {
+        return res.status(400).json({ message: "All fields are required." });
+    }
+
+    try {
+        const transientData = {
+            type: Buffer.from(type),
+            quantity: Buffer.from(quantity.toString()),
+            price: Buffer.from(price.toString()),
+            distributerName: Buffer.from(distributerName),
+        };
+
+        const result = await userClient.submitTxn(
+            "distributer",
+            "agrichannel",
+            "Supply-chain",
+            "OrderContract",
+            "privateTxn",
+            transientData,
+            "createOrder",
+            orderId
+        );
+
+        res.status(200).json({ message: "Order created successfully.", result: new TextDecoder().decode(result) });
+    } catch (error) {
+        console.error("Error creating order:", error);
+        res.status(500).json({ message: "Error creating order.", error: error.message });
+    }
+});
+
+// Read Order
+router.get("/readOrder/:orderId", async (req, res) => {
+    const { orderId } = req.params;
+
+    try {
+        const result = await userClient.submitTxn(
+            "wholesaler",
+            "agrichannel",
+            "Supply-chain",
+            "OrderContract",
+            "queryTxn",
+            "",
+            "readOrder",
+            orderId
+        );
+
+        const decodedResult = new TextDecoder().decode(result);
+        res.status(200).json(JSON.parse(decodedResult));
+    } catch (error) {
+        console.error("Error reading order:", error);
+        res.status(500).json({ message: `Error reading order ${orderId}.`, error: error.message });
+    }
+});
+
+// Delete Order
+router.delete("/deleteOrder/:orderId", async (req, res) => {
+    const { orderId } = req.params;
+
+    try {
+        await userClient.submitTxn(
+            "distributer",
+            "agrichannel",
+            "Supply-chain",
+            "OrderContract",
+            "queryTxn",
+            "",
+            "deleteOrder",
+            orderId
+        );
+
+        res.status(200).json({ message: `Order ${orderId} deleted successfully.` });
+    } catch (error) {
+        console.error("Error deleting order:", error);
+        res.status(500).json({ message: `Error deleting order ${orderId}.`, error: error.message });
+    }
+});
+
+// Read Product
+router.post("/readproduct", async (req, res) => {
+    try {
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({ success: false, message: "Product ID is required." });
+        }
+
+        let manufacturerClient = new clientApplication();
+        let products = await manufacturerClient.submitTxn(
+            "manufacturer",
+            "agrichannel",
+            "Supply-chain",
+            "ProductContract",
+            "queryTxn",
+            "",
+            "readProduct",
+            productId
+        );
+
+        const data = new TextDecoder().decode(products);
+        const value = JSON.parse(data);
+
+        res.status(200).json({ success: true, message: "Product data read successfully!", data: { value } });
+    } catch (error) {
+        console.error("Error reading product:", error);
+        res.status(500).json({ success: false, message: "Please check the Product ID!", data: { error: error.message } });
+    }
+});
+
+// Create Product
+router.post("/createproduct", async (req, res) => {
+    try {
+        const { productId, type, quantity, harvestDate, origin, producerName } = req.body;
+
+        if (!productId || !type || !quantity || !harvestDate || !origin || !producerName) {
+            return res.status(400).json({ success: false, message: "All fields are required." });
+        }
+
+        let manufacturerClient = new clientApplication();
+
+        const result = await manufacturerClient.submitTxn(
+            "manufacturer",
+            "agrichannel",
+            "Supply-chain",
+            "ProductContract",
+            "invokeTxn",
+            "",
+            "createProduct",
+            productId,
+            type,
+            quantity.toString(),
+            harvestDate.toString(),
+            origin,
+            producerName
+        );
+
+        res.status(201).json({ success: true, message: "Product created successfully!", data: { result } });
+    } catch (error) {
+        console.error("Error creating product:", error);
+        res.status(500).json({ success: false, message: "Error creating product!", data: { error: error.message } });
+    }
+});
+
+// Delete Product
+router.delete("/deleteproduct", async (req, res) => {
+    try {
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({ success: false, message: "Product ID is required." });
+        }
+
+        let manufacturerClient = new clientApplication();
+
+        const result = await manufacturerClient.submitTxn(
+            "manufacturer",
+            "agrichannel",
+            "Supply-chain",
+            "ProductContract",
+            "dltTxn",
+            "",
+            "deleteProduct",
+            productId
+        );
+
+        res.status(200).json({ success: true, message: "Product deleted successfully!", data: { result } });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ success: false, message: "Error deleting product.", data: { error: error.message } });
+    }
+});
+
+module.exports = router;

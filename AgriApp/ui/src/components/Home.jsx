@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../assets/images/images.png';
 import img1 from '../assets/images/image.png';
 import manufacturerImg from '../assets/images/Manufacturer.png';
-import distributorImg from '../assets/images/Distributer.png';
+import distributerImg from '../assets/images/Distributer.png';
 import wholesalerImg from '../assets/images/Wholesaler.png';
 import marketImg from '../assets/images/Market.png';
 import { useNavigate } from 'react-router-dom';
@@ -91,10 +91,10 @@ function HomePage() {
               </div>
               <div
                 className="text-center cursor-pointer"
-                onClick={() => handleRoleClick('distributor')}
+                onClick={() => handleRoleClick('distributer')}
               >
-                <img src={distributorImg} alt="Distributor" className="h-24 mx-auto mb-2" />
-                <p className="text-gray-700 font-medium">Distributor</p>
+                <img src={distributerImg} alt="Distributer" className="h-24 mx-auto mb-2" />
+                <p className="text-gray-700 font-medium">Distributer</p>
               </div>
               <div
                 className="text-center cursor-pointer"

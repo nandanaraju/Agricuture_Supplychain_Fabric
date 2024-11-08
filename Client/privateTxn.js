@@ -3,8 +3,8 @@ const { clientApplication } = require('./client')
 let userClient = new clientApplication();
 
 const transientData = {
-    type: Buffer.from("Paddy"),
-    quantity: Buffer.from("10"),
+    type: Buffer.from("White"),
+    quantity: Buffer.from("30"),
     price: Buffer.from("1000"),
     distributerName: Buffer.from("Distributer1")
 }

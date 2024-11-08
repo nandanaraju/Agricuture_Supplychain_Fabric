@@ -21,19 +21,41 @@ const ReadProductPage = () => {
 
     const result = await res.json();
     if (result.success) {
-      // console.log("dfd", result.data.value);
-      // toast.success(`Read data: ${JSON.stringify(result.data.value)}`);
       setProductData(result.data.value);
     } else {
-      toast.error(`Please check product id`);
+      toast.error("Please check product ID");
     }
-
   };
 
   const resetForm = () => {
-    setProductId(''); // Clear the input field
+    setProductId(""); // Clear the input field
     setProductData(null); // Clear the fetched data
-    // toast.info('Form reset successfully.');
+  };
+
+  const deleteProduct = async () => {
+    if (!productId) {
+      toast.error("Product ID is required to delete");
+      return;
+    }
+
+    const deleteDetails = { productId };
+
+    const res = await fetch("/api/deleteproduct", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(deleteDetails),
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      toast.success("Product deleted successfully!");
+      setProductData(null); // Clear the product data on successful deletion
+      setProductId(""); // Clear the input field
+    } else {
+      toast.error(result.message || "Error deleting product");
+    }
   };
 
   return (
@@ -90,6 +112,12 @@ const ReadProductPage = () => {
                 </li>
               ))}
             </ul>
+            <button
+              onClick={deleteProduct}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Delete Product
+            </button>
           </div>
         )}
       </div>

@@ -48,6 +48,8 @@
             resultBytes = await contract.submitTransaction(txnName, ...args);
         } else if (txnType == "queryTxn") {
             resultBytes = await contract.evaluateTransaction(txnName, ...args);
+        }else if (txnType == "dltTxn") {
+            resultBytes = await contract.submitTransaction(txnName, ...args);
         } else if (txnType == "transTxn") {
             resultBytes = await contract.submitTransaction(txnName, ...args);
         }else if (txnType == "matchTxn") {

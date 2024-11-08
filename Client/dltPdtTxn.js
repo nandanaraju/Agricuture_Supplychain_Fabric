@@ -6,11 +6,10 @@ userClient.submitTxn(
     "agrichannel",
     "Supply-chain",
     "ProductContract",
-    "assignTxn",
+    "dltTxn",
     "",
-    "completeProductSaleAtMarket",
-    "Product-01",
-    "500"
+    "deleteProduct",
+    "Product-01"
 ).then(result => {
     console.log(new TextDecoder().decode(result))
 })

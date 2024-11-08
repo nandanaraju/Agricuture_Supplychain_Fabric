@@ -5,6 +5,9 @@ import SignupPage from "./components/SignupPage"
 import ManufacturerDashboard from "./components/ManufacturerDashboard"
 import CreateProductPage from "./components/CreateProduct"
 import ReadProductPage from "./components/ReadProduct"
+import DistributerDashboard from "./components/DistributerDashboard"
+import CreateOrder from "./components/CreateOrder"
+import ReadOrder from "./components/ReadOrder"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -15,6 +18,10 @@ function App() {
     <Route path="/manufacturer"element={<ManufacturerDashboard/>}/>
     <Route path="/create-product"element={<CreateProductPage/>}/>
     <Route path="/read-product"element={<ReadProductPage/>}/>
+    <Route path="/distributer"element={<DistributerDashboard/>}/>
+    <Route path="/create-order"element={<CreateOrder/>}/>
+    <Route path="/read-order"element={<ReadOrder/>}/>
+
 
 
       
