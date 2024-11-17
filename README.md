@@ -20,9 +20,9 @@ Blockchain technology offers a transparent, immutable, and secure decentralized 
 - **Chaincode**: Javascript for writing the smart contracts.
 
 ## 👥 Users in this Application
-- **Manufacturer**: Responsible for producing goods.
-- **Wholesaler**: Handles bulk purchasing and distribution.
-- **Distributer**: Distributes products to markets.
+- **Manufacturer**: Responsible for producing goods & Transfer it to wholesaler.
+- **Wholesaler**: Handles bulk purchasing and distribution & Check the matching criteria between products and orders.
+- **Distributer**: Create orders & Distributes products to markets.
 - **Market**: The end-user of the product.
 
 ## 🚀 Getting Started
