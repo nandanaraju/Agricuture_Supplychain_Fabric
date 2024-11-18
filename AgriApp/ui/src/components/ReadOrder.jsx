@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ReadOrder = () => {
   const [orderId, setOrderId] = useState('');
   const [orderDetails, setOrderDetails] = useState(null);
   const [message, setMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleReadOrder = async () => {
     try {
@@ -12,6 +14,7 @@ const ReadOrder = () => {
         const data = await response.json();
         setOrderDetails(data);
         setMessage('');
+        setSuccessMessage('Order fetched successfully');
       } else {
         const errorData = await response.json();
         setMessage(errorData.message || 'Failed to fetch order.');
@@ -22,35 +25,91 @@ const ReadOrder = () => {
     }
   };
 
+  const resetForm = () => {
+    setOrderId('');
+    setOrderDetails(null);
+    setMessage('');
+    setSuccessMessage('');
+  };
+
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Read Order</h2>
-      <div className="mb-4">
-        <label htmlFor="orderId" className="block text-gray-700 font-medium mb-2">Order ID:</label>
-        <input
-          type="text"
-          id="orderId"
-          value={orderId}
-          onChange={(e) => setOrderId(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <div className="flex justify-center mb-4">
-        <button
-          onClick={handleReadOrder}
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Fetch Order
-        </button>
-      </div>
-      {message && <p className="text-red-600 text-center mb-4">{message}</p>}
-      {orderDetails && (
-        <div className="mt-6 bg-gray-100 p-4 rounded-lg">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Order Details</h3>
-          <pre className="text-gray-700 whitespace-pre-wrap">{JSON.stringify(orderDetails, null, 2)}</pre>
+    <section
+      className="h-screen flex justify-center items-center bg-cover bg-center"
+      style={{
+        backgroundImage: `url("https://www.apacoutlookmag.com/media/Agriculture-Sensor-Technology-Ritam-Gandhi.png")`,
+      }}
+    >
+      <div className="container mx-auto max-w-3xl px-4">
+        <div className="bg-white bg-opacity-80 px-6 py-8 shadow-lg rounded-md border">
+          <h2 className="text-3xl text-green-800 text-center font-semibold mb-6">
+            Read Order
+          </h2>
+
+          <div className="mb-6">
+            <label
+              htmlFor="orderId"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Order ID
+            </label>
+            <input
+              type="text"
+              id="orderId"
+              name="orderId"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={orderId}
+              onChange={(e) => setOrderId(e.target.value)}
+            />
+          </div>
+
+          <div className="flex justify-between mb-6">
+            <button
+              onClick={handleReadOrder}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Fetch Order
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Reset
+            </button>
+          </div>
+
+          {message && (
+            <div className="mt-4 p-4 bg-red-100 border border-red-300 rounded">
+              <p className="text-red-800 font-medium">{message}</p>
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded">
+              <p className="text-green-800 font-medium">{successMessage}</p>
+            </div>
+          )}
+
+          {orderDetails && (
+            <div className="mt-6">
+              <div className="bg-white bg-opacity-90 p-4 rounded shadow-md">
+                <h3 className="text-xl font-semibold text-green-700 mb-4">
+                  Order Details
+                </h3>
+                <div className="grid grid-cols-2 gap-4 text-gray-700">
+                  {Object.entries(orderDetails).map(([key, value]) => (
+                    <div key={key} className="flex ">
+                      <span className="font-medium text-gray-600">{key}:</span>
+                      <span>{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
 

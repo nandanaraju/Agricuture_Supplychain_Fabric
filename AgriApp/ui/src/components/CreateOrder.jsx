@@ -40,76 +40,105 @@ const CreateOrder = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Create Order</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-gray-600 font-medium mb-2">Order ID:</label>
-          <input
-            type="text"
-            value={orderId}
-            onChange={(e) => setOrderId(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+    <>
+      <section
+        className="h-screen flex justify-center items-center bg-cover bg-center"
+        style={{
+          backgroundImage: `url("https://www.apacoutlookmag.com/media/Agriculture-Sensor-Technology-Ritam-Gandhi.png")`,
+        }}
+      >
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="bg-white bg-opacity-80 px-6 py-8 shadow-lg rounded-md border">
+            <form onSubmit={handleSubmit}>
+              <h2 className="text-3xl text-green-800 text-center font-semibold mb-6">
+                Create Order
+              </h2>
+
+              {message && (
+                <div
+                  className={`mb-4 p-3 rounded ${
+                    message.includes('success')
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}
+                >
+                  {message}
+                </div>
+              )}
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Order ID</label>
+                <input
+                  type="text"
+                  value={orderId}
+                  onChange={(e) => setOrderId(e.target.value)}
+                  required
+                  className="border rounded w-full py-2 px-3 mb-2"
+                  placeholder="eg. Order-01"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Type</label>
+                <input
+                  type="text"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  required
+                  className="border rounded w-full py-2 px-3 mb-2"
+                  placeholder="eg. Vegetables"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Quantity</label>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  required
+                  className="border rounded w-full py-2 px-3 mb-2"
+                  placeholder="eg. 100"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Price</label>
+                <input
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                  className="border rounded w-full py-2 px-3 mb-2"
+                  placeholder="eg. 1000"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">Distributor Name</label>
+                <input
+                  type="text"
+                  value={distributerName}
+                  onChange={(e) => setDistributerName(e.target.value)}
+                  required
+                  className="border rounded w-full py-2 px-3 mb-2"
+                  placeholder="eg. Distributor-01"
+                />
+              </div>
+
+              <div>
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Create Order
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div>
-          <label className="block text-gray-600 font-medium mb-2">Type:</label>
-          <input
-            type="text"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-600 font-medium mb-2">Quantity:</label>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-600 font-medium mb-2">Price:</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-600 font-medium mb-2">Distributor Name:</label>
-          <input
-            type="text"
-            value={distributerName}
-            onChange={(e) => setDistributerName(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        >
-          Create Order
-        </button>
-      </form>
-      {message && (
-        <p
-          className={`mt-4 text-center font-medium ${
-            message.includes('success') ? 'text-green-600' : 'text-red-600'
-          }`}
-        >
-          {message}
-        </p>
-      )}
-    </div>
+      </section>
+    </>
   );
 };
 

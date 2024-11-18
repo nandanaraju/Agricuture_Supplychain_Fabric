@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import logo from '../assets/images/images.png';
+import logo from '../assets/images/logo.png';
 import img1 from '../assets/images/image.png';
-import manufacturerImg from '../assets/images/images.jpeg';
-import distributerImg from '../assets/images/images.jpeg';
-import wholesalerImg from '../assets/images/images.jpeg';
-import marketImg from '../assets/images/images.jpeg';
+import manufacturerImg from '../assets/images/images.png';
+import distributerImg from '../assets/images/images.png';
+import wholesalerImg from '../assets/images/images.png';
+import marketImg from '../assets/images/images.png';
 import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
@@ -46,9 +46,7 @@ function HomePage() {
           >
             Login
           </button>
-          <button className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition duration-300">
-            Sign Up
-          </button>
+          
         </div>
       </header>
 

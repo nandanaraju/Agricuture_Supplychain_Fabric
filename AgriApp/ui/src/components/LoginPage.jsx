@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import img from "../assets/images/images.png";
+import img from "../assets/images/logo.png";
 
 const LoginPage = () => {
   const location = useLocation();
