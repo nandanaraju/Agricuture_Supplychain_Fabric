@@ -275,13 +275,13 @@ router.post("/queryAllProducts", async (req, res) => {
 });
 
 // Transfer Product to distributer
-router.post("/transferTodistributer", async (req, res) => {
-  const { productId, distributerName } = req.body;
+router.post("/transferToWholesaler", async (req, res) => {
+  const { productId, wholesalerName } = req.body;
 
-  if (!productId || !distributerName) {
+  if (!productId || !wholesalerName) {
     return res
       .status(400)
-      .json({ message: "Product ID and distributer Name are required." });
+      .json({ message: "Product ID and wholesaler Name are required." });
   }
 
   try {
@@ -292,16 +292,16 @@ router.post("/transferTodistributer", async (req, res) => {
       "ProductContract", // Smart contract name
       "transTxn", // Transaction type
       "", // No transient data
-      "transferTodistributer", // Function name in chaincode
+      "transferToWholesaler", // Function name in chaincode
       productId, // Product ID to transfer
-      distributerName // distributer receiving the product
+      wholesalerName // distributer receiving the product
     );
 
     const decodedResult = new TextDecoder().decode(result);
 
     res.status(200).json({
       success: true,
-      message: "Product transferred to distributer successfully.",
+      message: "Product transferred to wholesaler successfully.",
       data: { result: decodedResult },
     });
   } catch (error) {

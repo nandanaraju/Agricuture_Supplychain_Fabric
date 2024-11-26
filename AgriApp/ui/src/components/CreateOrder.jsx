@@ -135,6 +135,14 @@ const CreateOrder = () => {
                 </button>
               </div>
             </form>
+            <div className="mt-2 text-center">
+            <a
+              href="/distributer"
+              className="inline-block px-4 py-2 bg-black text-white font-semibold rounded "
+            >
+              Back to Dashboard
+            </a>
+          </div>
           </div>
         </div>
       </section>

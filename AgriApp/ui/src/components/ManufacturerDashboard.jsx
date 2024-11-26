@@ -5,9 +5,7 @@ import img from "../assets/images/images.png";
 const ManufacturerDashboard = () => {
   return (
     <>
-    <div className="bg-gray-100 text-xl">
-        <a href="/home">Back</a>
-      </div>
+    
     <div className="bg-gray-100 h-screen flex items-center justify-center overflow-hidden">
       
       <div className="grid grid-cols-1 gap-4 md:grid-cols-1 w-full max-w-4xl px-4">
@@ -53,6 +51,14 @@ const ManufacturerDashboard = () => {
                 Go to Read
               </button>
             </Link>
+          </div>
+          <div className="mt-2 text-center">
+            <a
+              href="/home"
+              className="inline-block px-4 py-2 bg-black text-white font-semibold rounded "
+            >
+              Back to Home
+            </a>
           </div>
         </div>
 

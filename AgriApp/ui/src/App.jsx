@@ -14,7 +14,7 @@ import QueryAllOrders from "./components/QueryAllOrders"
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <>
-    <Route path='/'element={<HomePage/>}/>
+    <Route path='/home'element={<HomePage/>}/>
     <Route path='/login'element={<LoginPage/>}/>
     <Route path="/signup"element={<SignupPage/>}/>
     <Route path="/manufacturer"element={<ManufacturerDashboard/>}/>
